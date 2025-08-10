@@ -303,6 +303,7 @@ num2.incr(); // if not static number still => 1
 // also make getter to get the value but not set it from the outside of class...not after private this will throw an error
 
 // Inheritance
+// Method Overriding: Implement the get name() to prefix "Professor" for Teacher Class
 class Person {
 	constructor(public firstName: string, public lastName: string) {}
 	get name(): string {
@@ -325,9 +326,12 @@ class Student extends Person {
 class Teacher extends Person {
 	constructor(public teacherID: number, firstName: string, lastName: string) {
 		super(firstName, lastName);
-	}
+	} // constructor can be skipped if not new property has to be made like teacherID...so this class will inherit exactly the Person constructor
 	teaching(): void {
 		console.log("Teacher is teaching");
+	}
+	override get name(): string {
+		return "Professor" + super.name;
 	}
 }
 
