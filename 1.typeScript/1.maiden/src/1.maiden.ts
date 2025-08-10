@@ -301,3 +301,40 @@ num2.incr(); // if not static number still => 1
 // after making it static, it has one flaw that now anybody can change the value of static value making more bugs like
 // Number.value = 0; // this is not good, so we will make it private so this does not happen
 // also make getter to get the value but not set it from the outside of class...not after private this will throw an error
+
+// Inheritance
+class Person {
+	constructor(public firstName: string, public lastName: string) {}
+	get name(): string {
+		return this.firstName + " " + this.lastName;
+	}
+	walk(): void {
+		console.log("Walking");
+	}
+}
+
+class Student extends Person {
+	constructor(public studentID: number, firstName: string, lastName: string) {
+		super(firstName, lastName);
+	}
+	takeTest(): void {
+		console.log("Taking a test");
+	}
+}
+
+class Teacher extends Person {
+	constructor(public teacherID: number, firstName: string, lastName: string) {
+		super(firstName, lastName);
+	}
+	teaching(): void {
+		console.log("Teacher is teaching");
+	}
+}
+
+let s1 = new Student(1, "N", "D");
+s1.walk();
+s1.takeTest();
+
+let t1 = new Teacher(1, "H", "D");
+t1.walk();
+t1.teaching();
