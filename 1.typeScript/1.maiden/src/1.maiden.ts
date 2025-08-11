@@ -496,6 +496,7 @@ interface Result<T> {
 }
 
 function fetch<T>(url: string): Result<T> {
+	url = url;
 	return { data: null, error: null };
 }
 
@@ -504,3 +505,43 @@ result.data?.username;
 
 let result2 = fetch<Product>("url");
 result2.data?.title;
+
+// Generic Constraints
+function aaa<T extends string | number>(value: T): T {
+	return value;
+}
+
+aaa("hi");
+// here Template can only accept string & number
+// some more way it can be used
+function aa1<T extends { name: string }>(value: T): T {
+	return value;
+}
+aa1({ name: "ND" });
+// another
+interface Persons {
+	name: string;
+}
+function aa2<T extends Persons>(value: T): T {
+	return value;
+}
+aa2({ name: "HIII" });
+// another
+class PPerson {
+	constructor(public name: string) {}
+}
+class SPerson extends PPerson {
+	constructor(name: string) {
+		super(name);
+	}
+}
+function aa3<T extends SPerson>(value: T): T {
+	return value;
+}
+aa3(new SPerson("ABC")); // subclass
+aa3(new PPerson("XYZ")); // parent class
+// here we can put instaance of any parent or child class
+// the above code is not similar to below code as you  loss the precision & the narrowing benifits of intellisence
+// function aaa(value: string | number): string | number {
+// 	return value;
+// }
