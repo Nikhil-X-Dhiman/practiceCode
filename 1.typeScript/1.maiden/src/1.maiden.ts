@@ -447,3 +447,15 @@ class GoogleCalender implements CloudCalender {
 
 let c1 = new GoogleCalender("ND");
 c1.addEvent();
+
+// Generic Classes -----------------------
+// it is basically same as Template Class in C++, & is used to define types dynamically as the data appears
+class KeyValuePair<K, V> {
+	constructor(public key: K, public value: V) {}
+}
+let pair1 = new KeyValuePair<String, String>("1", "ABC");
+console.log(pair1.key, pair1.value);
+let pair2 = new KeyValuePair<number, String>(2, "XYZ");
+console.log(pair2.key, pair2.value);
+let pair3 = new KeyValuePair(3, "MNO"); // even if you forget to write or pass the types the compiler will infer the types automatically
+console.log(pair3.key, pair3.value);
