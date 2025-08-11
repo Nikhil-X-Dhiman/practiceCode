@@ -380,3 +380,36 @@ function makeSound(animal: Animal[]): void {
 		animalObj.sound();
 	}
 }
+
+// Abstract Class : means incomplete class & we have to block the creation of the object of this incomplete class therefore we prefix the class with abstract & the function that are incomplete are too prefixed with abstract keyword.
+
+abstract class Shape {
+	constructor(public color: string) {}
+
+	abstract render(): void;
+}
+
+class Circle extends Shape {
+	constructor(public radius: number, color: string) {
+		super(color);
+	}
+	override render(): void {
+		console.log("Circle is Drawing");
+	}
+}
+
+class Square extends Shape {
+	constructor(public side: number, color: string) {
+		super(color);
+	}
+	override render(): void {
+		console.log("Square is Drawing");
+	}
+}
+
+// const shape = new Shape("red");	// we cannot nake object of the abstract class like this & prevent a bug
+// shape.render();
+let circle = new Circle(5, "black");
+circle.render();
+let square = new Square(10, "slate");
+square.render();
