@@ -595,3 +595,22 @@ class ProductStore extends Store<Products> {
 }
 const pro = new ProductStore();
 pro.filterByCategory("abc");
+
+// keyof Operator ---------------
+interface Productss {
+	name: string;
+	price: number;
+}
+class Stores<T> {
+	protected _objects: T[] = [];
+	add(obj: T): void {
+		this._objects.push(obj);
+	}
+	find(property: keyof T, value: string | unknown): T | undefined {
+		return this._objects.find((obj) => obj[property] === value);
+	}
+}
+let stores = new Stores<Productss>();
+stores.add({ name: "a", price: 1 });
+stores.find("name", "a");
+stores.find("price", 1);
