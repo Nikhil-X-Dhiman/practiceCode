@@ -478,3 +478,29 @@ class ArrayUtils {
 
 let aa = ArrayUtils.boxInArray("1"); // same as above
 console.log(aa);
+
+// Generic Interfaces
+// endpoint of a website
+// www.abc/users
+// www.abc/products
+
+interface User {
+	username: string;
+}
+interface Product {
+	title: string;
+}
+interface Result<T> {
+	data: T | null;
+	error: string | null;
+}
+
+function fetch<T>(url: string): Result<T> {
+	return { data: null, error: null };
+}
+
+let result = fetch<User>("url");
+result.data?.username;
+
+let result2 = fetch<Product>("url");
+result2.data?.title;
