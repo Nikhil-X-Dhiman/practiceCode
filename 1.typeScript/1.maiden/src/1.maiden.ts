@@ -545,3 +545,53 @@ aa3(new PPerson("XYZ")); // parent class
 // function aaa(value: string | number): string | number {
 // 	return value;
 // }
+
+// Extending Generic Classes	-------------------
+interface Products {
+	name: string;
+	price: number;
+}
+
+class Store<T> {
+	protected _objects: T[] = [];
+
+	add(obj: T): void {
+		this._objects.push(obj);
+	}
+}
+
+const st = new Store<Products>();
+st.add({ name: "helo", price: 6 });
+// st.objects = [];	// this is illegal..needs to make it private
+
+// ## 3 Different senerio to extend the generic Store Class
+// in this we are passing on the generic type parameter
+class CompressibleStore<T> extends Store<T> {
+	compress(value: T): void {
+		value = value;
+	}
+}
+const store = new CompressibleStore<Products>();
+store.add({ name: "ND", price: 50 });
+
+// here, we are Restricting the Generic Type Parameter
+class SearchableStore<T extends { name: string }> extends Store<T> {
+	find(name: string): T | undefined {
+		// here we need to access the product list but it is private... so we make it protected so it can be inherited
+		return this._objects.find((obj) => obj.name === name);
+		// here, obj.name is not a property so we give the type in the class type assertion
+	}
+}
+
+const obj1 = new SearchableStore();
+obj1.find("hello");
+
+// Fix or terminating the Generic Type Parameter
+class ProductStore extends Store<Products> {
+	filterByCategory(category: string): Products[] {
+		category = category;
+		return [];
+	} // as we dont wanna use this method in other like user...so this is only applicable to products
+}
+const pro = new ProductStore();
+pro.filterByCategory("abc");
