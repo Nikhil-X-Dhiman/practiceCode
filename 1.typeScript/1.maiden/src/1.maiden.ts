@@ -459,3 +459,22 @@ let pair2 = new KeyValuePair<number, String>(2, "XYZ");
 console.log(pair2.key, pair2.value);
 let pair3 = new KeyValuePair(3, "MNO"); // even if you forget to write or pass the types the compiler will infer the types automatically
 console.log(pair3.key, pair3.value);
+
+// Generic Functions --------------------
+// do the same as above but in functions
+function boxInArray<T>(value: T): T[] {
+	return [value];
+}
+let ac = boxInArray("1"); // array of string
+let bc = boxInArray(10); // array of number
+console.log(ac, bc);
+
+// Now use in class & also use static both can be used if you dont want to make the object use static...here you can skip using class generic
+class ArrayUtils {
+	static boxInArray<T>(value: T) {
+		return [value];
+	}
+}
+
+let aa = ArrayUtils.boxInArray("1"); // same as above
+console.log(aa);
