@@ -77,5 +77,150 @@ function getCustomer(id) {
 }
 let customer = getCustomer(1);
 console.log(customer === null || customer === void 0 ? void 0 : customer.birthday);
+let speed = null;
+speed = 0;
+let ride = {
+    speed: speed !== null && speed !== void 0 ? speed : 30,
+};
+console.log(ride);
+function ab(text) {
+    console.log(text);
+}
+ab("hello");
+function ba(text) {
+    if (typeof text === "string") {
+        text.split("");
+        text.replace("d", "d");
+    }
+}
+ba("hello");
+console.log("hi there");
+class Account {
+    constructor(id, owner, _balance) {
+        this.id = id;
+        this.owner = owner;
+        this._balance = _balance;
+    }
+    deposit(amount) {
+        if (amount <= 0) {
+            throw new Error("Insufficient Amount");
+        }
+        this._balance += amount;
+    }
+    withraw(amount) {
+        if (amount > this._balance) {
+            throw new Error("Insufficient Balance");
+        }
+        else if (amount <= 0) {
+            throw new Error("Invalid Amount");
+        }
+        this._balance -= amount;
+    }
+    getBalance() {
+        return this._balance;
+    }
+    get balance() {
+        return this._balance;
+    }
+    set balance(value) {
+        if (value < 0) {
+            throw new Error("Invalid Value");
+        }
+        this._balance = value;
+    }
+}
+let account = new Account(1, "ND", 0);
+account.deposit(1000);
+account.withraw(500);
+account.deposit(1500);
+console.log(typeof account);
+console.log(account instanceof Account);
+const reportCard = {
+    Math: 90,
+    Science: 99,
+};
+console.log(reportCard);
+class SeatAssignment {
+}
+let seats = new SeatAssignment();
+seats.A1 = "ND";
+seats["A2"] = "DD";
+class Number {
+    incr() {
+        Number._value++;
+    }
+    decr() {
+        Number._value--;
+    }
+    get value() {
+        return Number._value;
+    }
+}
+Number._value = 0;
+let num1 = new Number();
+num1.incr();
+let num2 = new Number();
+num2.incr();
+class Person {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    get name() {
+        return this.firstName + " " + this.lastName;
+    }
+    walk() {
+        console.log("Walking");
+    }
+}
+class Student extends Person {
+    constructor(studentID, firstName, lastName) {
+        super(firstName, lastName);
+        this.studentID = studentID;
+    }
+    takeTest() {
+        console.log("Taking a test");
+    }
+}
+class Teacher extends Person {
+    constructor(teacherID, firstName, lastName) {
+        super(firstName, lastName);
+        this.teacherID = teacherID;
+    }
+    teaching() {
+        console.log("Teacher is teaching");
+    }
+    get name() {
+        return "Professor" + super.name;
+    }
+}
+let s1 = new Student(1, "N", "D");
+s1.walk();
+s1.takeTest();
+let t1 = new Teacher(1, "H", "D");
+t1.walk();
+t1.teaching();
+class Animal {
+    sound() {
+        console.log("Animal Making Sound");
+    }
+}
+class Dog extends Animal {
+    sound() {
+        console.log("woff");
+    }
+}
+class Cat extends Animal {
+    sound() {
+        console.log("meoww");
+    }
+}
+const arr = [new Dog(), new Cat()];
+makeSound(arr);
+function makeSound(animal) {
+    for (let animalObj of animal) {
+        animalObj.sound();
+    }
+}
 export {};
 //# sourceMappingURL=1.maiden.js.map

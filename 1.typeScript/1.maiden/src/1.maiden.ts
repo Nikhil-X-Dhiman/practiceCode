@@ -150,23 +150,27 @@ let ride = {
 	// speed: speed || 30, // not correct as 0 is also considered false value
 	speed: speed ?? 30,
 };
+console.log(ride);
 
 // Type Asssertions (when we know the type of object better than tsc)
-let phone = document.getElementById("phone"); // this returns HTMLElement which is a super class of elements but we know that what we want is a sub class of the element, here an input element which will have a value option which this super class does not have, So
-let phone1 = document.getElementById("phone") as HTMLInputElement;
-let phone2 = <HTMLInputElement>document.getElementById("phone"); // can also be written as this
+// let phone = document.getElementById("phone"); // this returns HTMLElement which is a super class of elements but we know that what we want is a sub class of the element, here an input element which will have a value option which this super class does not have, So
+// let phone1 = document.getElementById("phone") as HTMLInputElement;
+// let phone2 = <HTMLInputElement>document.getElementById("phone"); // can also be written as this
 // it enables you to do this...like getting input values
 
 // console.log(phone.value); //Not available here..
-console.log(phone1.value); // available here same for phone2
-console.log(phone2.value); // available here
+// console.log(phone1.value); // available here same for phone2
+// console.log(phone2.value); // available here
 
 // any Type for unknown types if we were converting JavaScript code but never use it in new TS codebase
 function ab(text: any): void {
-	text.hello();
-	text.bye();
+	console.log(text);
+
+	// text.hello();
+	// text.bye();
 	// as the text is any it allows us to call anything on the variable which is bad
 }
+ab("hello");
 function ba(text: unknown): void {
 	// text.hello(); // here it throws us error & won't allow us to use any function
 	// we have to use narrowing to use the functions on the arguments
@@ -177,7 +181,7 @@ function ba(text: unknown): void {
 	}
 	// so unknown forces us to see the type of the argument for less errors
 }
-
+ba("hello");
 // never type - less used but it tells that the function will not return anything...so the next code becomes un-rechable as the function is returning void without never keyword, writing never will tell the compiler of this & will show an error
 // function reject(error: string){
 // function reject(error: string): never {
@@ -223,9 +227,9 @@ class Account {
 		// Record a transaction
 		this._balance -= amount;
 	}
-	private calculateTax(): void {
-		console.log("abc");
-	}
+	// private calculateTax(): void {
+	// 	console.log("abc");
+	// }
 	getBalance(): number {
 		//due to private access modifies this is used to get access to the private property. But this is actually a method that need to be called as object.getBalance() but if we want previous behaviour like object.balance we use getter & setter for those things
 		return this._balance;
@@ -235,7 +239,7 @@ class Account {
 		return this._balance;
 	}
 	// Setter - but here setting a balance is not what's required
-	set balance(value: number): void {
+	set balance(value: number) {
 		if (value < 0) {
 			throw new Error("Invalid Value");
 		}
@@ -260,6 +264,8 @@ const reportCard: Marks = {
 	Math: 90,
 	Science: 99,
 };
+console.log(reportCard);
+
 // but now you can't have property name to be number to do that you need to do is let property accept both string & number value
 // type Marks = {
 // 	fixed: number;  // in above ex. this would throw an error
@@ -342,3 +348,28 @@ s1.takeTest();
 let t1 = new Teacher(1, "H", "D");
 t1.walk();
 t1.teaching();
+
+// Polymorphism ----------------------------
+class Animal {
+	sound(): void {
+		console.log("Animal Making Sound");
+	}
+}
+class Dog extends Animal {
+	override sound(): void {
+		console.log("woff");
+	}
+}
+class Cat extends Animal {
+	override sound(): void {
+		console.log("meoww");
+	}
+}
+const arr: Animal[] = [new Dog(), new Cat()];
+
+makeSound(arr);
+function makeSound(animal: Animal[]): void {
+	for (let animalObj of animal) {
+		animalObj.sound();
+	}
+}
