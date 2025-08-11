@@ -172,6 +172,9 @@ class Person {
     walk() {
         console.log("Walking");
     }
+    sleep() {
+        console.log("i am sleeping");
+    }
 }
 class Student extends Person {
     constructor(studentID, firstName, lastName) {
@@ -180,6 +183,7 @@ class Student extends Person {
     }
     takeTest() {
         console.log("Taking a test");
+        this.sleep();
     }
 }
 class Teacher extends Person {
@@ -189,6 +193,7 @@ class Teacher extends Person {
     }
     teaching() {
         console.log("Teacher is teaching");
+        this.sleep();
     }
     get name() {
         return "Professor" + super.name;
@@ -222,5 +227,60 @@ function makeSound(animal) {
         animalObj.sound();
     }
 }
+class Shape {
+    constructor(color) {
+        this.color = color;
+    }
+}
+class Circle extends Shape {
+    constructor(radius, color) {
+        super(color);
+        this.radius = radius;
+    }
+    render() {
+        console.log("Circle is Drawing");
+    }
+}
+class Square extends Shape {
+    constructor(side, color) {
+        super(color);
+        this.side = side;
+    }
+    render() {
+        console.log("Square is Drawing");
+    }
+}
+let circle = new Circle(5, "black");
+circle.render();
+let square = new Square(10, "slate");
+square.render();
+class GoogleCalender {
+    constructor(name) {
+        this.name = name;
+    }
+    sync() {
+        throw new Error("Method not implemented.");
+    }
+    addEvent() {
+        console.log("Adding an Event");
+    }
+    removeEvent() {
+        throw new Error("Method not implemented.");
+    }
+}
+let c1 = new GoogleCalender("ND");
+c1.addEvent();
+class KeyValuePair {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+let pair1 = new KeyValuePair("1", "ABC");
+console.log(pair1.key, pair1.value);
+let pair2 = new KeyValuePair(2, "XYZ");
+console.log(pair2.key, pair2.value);
+let pair3 = new KeyValuePair(3, "MNO");
+console.log(pair3.key, pair3.value);
 export {};
 //# sourceMappingURL=1.maiden.js.map

@@ -413,3 +413,37 @@ let circle = new Circle(5, "black");
 circle.render();
 let square = new Square(10, "slate");
 square.render();
+
+// Interface -----------------
+// it is similar to abstract & type in some way...it cannot have any login in it...it is not extend by class but is implements by class...
+// this Calender class can also be implemented by Abstract but interface is minimal to write & also if this class has any login in it then we will use abstract class as interface can't have method defination
+interface Calender {
+	name: string;
+	addEvent(): void;
+	removeEvent(): void;
+}
+
+interface CloudCalender extends Calender {
+	sync(): void;
+}
+
+class GoogleCalender implements CloudCalender {
+	// name: string;
+	// constructor(name: string){
+	// 	this.name = name;
+	// }
+	constructor(public name: string) {}
+	sync(): void {
+		throw new Error("Method not implemented.");
+	}
+	addEvent(): void {
+		// throw new Error("Method not implemented.");
+		console.log("Adding an Event");
+	}
+	removeEvent(): void {
+		throw new Error("Method not implemented.");
+	}
+}
+
+let c1 = new GoogleCalender("ND");
+c1.addEvent();
