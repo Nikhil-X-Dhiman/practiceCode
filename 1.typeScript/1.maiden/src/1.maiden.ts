@@ -154,6 +154,7 @@ console.log(ride);
 
 // Type Asssertions (when we know the type of object better than tsc)
 // let phone = document.getElementById("phone"); // this returns HTMLElement which is a super class of elements but we know that what we want is a sub class of the element, here an input element which will have a value option which this super class does not have, So
+
 // let phone1 = document.getElementById("phone") as HTMLInputElement;
 // let phone2 = <HTMLInputElement>document.getElementById("phone"); // can also be written as this
 // it enables you to do this...like getting input values
@@ -310,6 +311,7 @@ num2.incr(); // if not static number still => 1
 
 // Inheritance
 // Method Overriding: Implement the get name() to prefix "Professor" for Teacher Class
+// Protected: this access modifies works exactly like private but the difference is it can be inherited by subclasses, just like private the objects can't access it
 class Person {
 	constructor(public firstName: string, public lastName: string) {}
 	get name(): string {
@@ -317,6 +319,9 @@ class Person {
 	}
 	walk(): void {
 		console.log("Walking");
+	}
+	protected sleep(): void {
+		console.log("i am sleeping");
 	}
 }
 
@@ -326,6 +331,7 @@ class Student extends Person {
 	}
 	takeTest(): void {
 		console.log("Taking a test");
+		this.sleep(); // calling protected method
 	}
 }
 
@@ -335,6 +341,7 @@ class Teacher extends Person {
 	} // constructor can be skipped if not new property has to be made like teacherID...so this class will inherit exactly the Person constructor
 	teaching(): void {
 		console.log("Teacher is teaching");
+		this.sleep();
 	}
 	override get name(): string {
 		return "Professor" + super.name;
