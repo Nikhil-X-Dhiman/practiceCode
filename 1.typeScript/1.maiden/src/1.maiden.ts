@@ -465,9 +465,10 @@ console.log(pair3.key, pair3.value);
 function boxInArray<T>(value: T): T[] {
 	return [value];
 }
+let he = boxInArray<string>("999");
 let ac = boxInArray("1"); // array of string
 let bc = boxInArray(10); // array of number
-console.log(ac, bc);
+console.log(ac, bc, he);
 
 // Now use in class & also use static both can be used if you dont want to make the object use static...here you can skip using class generic
 class ArrayUtils {
@@ -490,15 +491,20 @@ interface User {
 interface Product {
 	title: string;
 }
+// this is generic interface
+// here this means it represents Result of Type T
+// interface Result<T extends User | Product> {
 interface Result<T> {
 	data: T | null;
 	error: string | null;
 }
-
+// here, we know the result will be of either user or product so we fetch
 function fetch<T>(url: string): Result<T> {
 	url = url;
 	return { data: null, error: null };
 }
+let result3 = fetch<number>("url");
+result3.data?.valueOf;
 
 let result = fetch<User>("url");
 result.data?.username;
@@ -514,10 +520,11 @@ function aaa<T extends string | number>(value: T): T {
 aaa("hi");
 // here Template can only accept string & number
 // some more way it can be used
-function aa1<T extends { name: string }>(value: T): T {
+function echo<T extends { name: string }>(value: T): T {
 	return value;
 }
-aa1({ name: "ND" });
+echo({ name: "ND" });
+// aa1({ name: 3 });
 // another
 interface Persons {
 	name: string;
@@ -614,3 +621,47 @@ let stores = new Stores<Productss>();
 stores.add({ name: "a", price: 1 });
 stores.find("name", "a");
 stores.find("price", 1);
+
+// Type Mapping -------------------------
+// if we want readonly interface of current one or other type of interface
+interface Producct {
+	name: string;
+	price: number;
+}
+
+// interface ReadOnlyProducct {
+// 	readonly name: string;
+// 	readonly price: number;
+// }
+// but doing this is not recommended & if we add some new properties in Product interface then we need to remember to add them to readonly one's too
+// better way(we need to use type alias)
+type ReadOnlyProducct = {
+	// using indexing signature && keyof
+	readonly [K in keyof Producct]: Producct[K];
+};
+
+let productP: ReadOnlyProducct = {
+	name: "A",
+	price: 5,
+};
+productP.name = "N";
+// can't assign as the property is readOnly
+
+// now we can use generic type of readonly if we have to do this for other than products
+type Optional<T> = {
+	[K in keyof T]?: T[K];
+};
+type Nullable<T> = {
+	[K in keyof T]: T[K] | null;
+};
+type ReadOnly<T> = {
+	readonly [K in keyof T]: T[K];
+};
+
+let product: ReadOnly<Producct> = {
+	name: "N",
+	price: 10,
+};
+product.name = "sdkjflk";
+
+// these types are so usefull that typescript has builtin support for them -->	TypeScript Utility Types
