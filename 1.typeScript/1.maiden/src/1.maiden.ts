@@ -689,6 +689,7 @@ product.name = "sdkjflk";
 	}
 
 	function fetch<T>(url: string): Result<T> {
+		url = url;
 		return { data: null, error: null };
 	}
 
@@ -706,6 +707,7 @@ product.name = "sdkjflk";
 			} else if (typeof value === "number") {
 				return this.objects.find((obj) => obj[key] === value);
 			}
+			return undefined;
 		}
 	}
 
@@ -729,4 +731,25 @@ product.name = "sdkjflk";
 	productStore.findProductByTitle("abc");
 	productStore.filterProductByPrice();
 	productStore.find("title", "abc");
+}
+
+// Decorator
+// Class Decorator
+// It is just a function that is called before the class..if it is applied on a class we have to supply it with 1 parameter of contructor...but we can call it anything. but its type showld be "Function"...It tell the compiler that this decorator is used on Class
+{
+	function Decorator1(constructor: Function) {
+		// here we have a chance to modify or enhance the class
+		console.log("Component Decorator Called");
+		constructor.prototype.uniqueID = new Date();
+		constructor.prototype.addToDOM = () => {
+			console.log("Inserting in the DOM");
+		};
+		//	now every Class1 Subclass & objects will have this modified properties & also the class which are prefixed with "Decorator!"
+	}
+	//	we could have also used inheritance on classes to achieve this... so these are just another tools
+	// decorators are called withoud making of instance of the class & also they are called only once no matter now many classed have the same one
+	@Decorator1
+	class Class1 {}
+	let c = new Class1();
+	console.log(c);
 }

@@ -17,6 +17,7 @@
 		"noUnusedLocals": true,
 		"noImplicitReturns": true,
 		"allowUnreachableCode": false,
+		"experimentalDecorators": true,
 		"types": [],
 		// For nodejs:
 		// "lib": ["esnext"],
