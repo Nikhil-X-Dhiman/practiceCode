@@ -665,3 +665,68 @@ let product: ReadOnly<Producct> = {
 product.name = "sdkjflk";
 
 // these types are so usefull that typescript has builtin support for them -->	TypeScript Utility Types
+
+// Practice above
+// get /products
+// get /users
+{
+	interface Product {
+		title: string;
+		price: number;
+		type: string;
+		available: boolean;
+	}
+
+	interface User {
+		name: string;
+		age: number;
+		email: string;
+	}
+
+	interface Result<T> {
+		data: T | null;
+		error: string | null;
+	}
+
+	function fetch<T>(url: string): Result<T> {
+		return { data: null, error: null };
+	}
+
+	let result = fetch<User>("/users");
+	console.log(result.data?.name);
+
+	class Store<T> {
+		objects: T[] = [];
+		add(obj: T): void {
+			this.objects.push(obj);
+		}
+		find(key: keyof T, value: unknown): T | undefined {
+			if (typeof value === "string") {
+				return this.objects.find((obj) => obj[key] === value);
+			} else if (typeof value === "number") {
+				return this.objects.find((obj) => obj[key] === value);
+			}
+		}
+	}
+
+	class ProductStore extends Store<Product> {
+		findProductByTitle(title: string): Product | undefined {
+			return this.objects.find((obj) => obj.title === title);
+		}
+		findProductThroughAnyProperty(
+			key: keyof Product,
+			value: string | unknown
+		): Product | undefined {
+			return this.objects.find((obj) => obj[key] === value);
+		}
+		filterProductByPrice(): Product[] {
+			return this.objects;
+		}
+	}
+
+	let productStore = new ProductStore();
+	productStore.add({ title: "abc", price: 4, type: "dkd", available: true });
+	productStore.findProductByTitle("abc");
+	productStore.filterProductByPrice();
+	productStore.find("title", "abc");
+}
