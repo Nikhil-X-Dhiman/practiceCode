@@ -857,3 +857,37 @@ product.name = "sdkjflk";
 	const p = new Person("ND");
 	p.getName;
 }
+
+// Property Decorators
+
+{
+	function MinLength(length: number) {
+		return (target: any, propertyName: string) => {
+			let value: string;
+			const descriptor: PropertyDescriptor = {
+				get() {
+					return value;
+				},
+				set(newValue: string) {
+					// data validation logic
+					if (newValue.length < length) {
+						throw new Error(
+							`${propertyName} should be atleast ${length} characters long`
+						);
+					}
+					value = newValue;
+				},
+			};
+			Object.defineProperty(target, propertyName, descriptor);
+		};
+	}
+	class User {
+		@MinLength(4) // this decorator will be called every time password value is changed
+		password: string;
+		constructor(password: string) {
+			this.password = password;
+		}
+	}
+	const user = new User("12345");
+	user.password;
+}
