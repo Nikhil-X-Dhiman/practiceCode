@@ -801,3 +801,59 @@ product.name = "sdkjflk";
 	let c = new Class1();
 	console.log(c);
 }
+
+// Method Decorators
+// do not memorize it
+{
+	function Log(
+		target: any,
+		methodName: string,
+		descriptor: PropertyDescriptor
+	) {
+		const original = descriptor.value as Function;
+		descriptor.value = function (...args: any) {
+			console.log("Before");
+			original.call(this, ...args);
+			console.log("After");
+		};
+		console.log(target, methodName);
+	}
+
+	class Person {
+		@Log
+		say(message: string) {
+			console.log("persont says: ", message);
+		}
+	}
+	let p = new Person();
+	p.say("Hola");
+}
+
+// Accessor Decorator ---------------------
+// create a decorator to apply on accessor (getter, setter)
+
+{
+	function Capitalize(
+		target: any,
+		methodName: string,
+		descriptor: PropertyDescriptor
+	) {
+		const original = descriptor.get;
+		// getters will have no value method but get
+		descriptor.get = function () {
+			// getters will have no args
+			const result = original?.call(this);
+			return typeof result === "string" ? result.toUpperCase : result;
+		};
+		console.log(target, methodName);
+	}
+	class Person {
+		constructor(public name: string) {}
+		@Capitalize
+		get getName() {
+			return this.name;
+		}
+	}
+	const p = new Person("ND");
+	p.getName;
+}
