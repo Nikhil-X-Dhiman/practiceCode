@@ -777,3 +777,27 @@ product.name = "sdkjflk";
 	let c = new Class1();
 	console.log(c);
 }
+
+// Decorator Composition: -------------------
+// so here the 2nd decorator will be run first & then the result of the class after it is done is passed to the other 1st decorator which in turns does its work on the class
+// Logic is f(g(x)) --> here the g(x) is run first then its result is forwarded to f(result) & then 2ns function is run
+{
+	function Decorator1(constructor: Function) {
+		console.log("Component Decorator Called");
+		constructor.prototype.uniqueID = new Date();
+		constructor.prototype.addToDOM = () => {
+			console.log("Inserting in the DOM");
+		};
+	}
+	function Decorator2(constructor: Function) {
+		console.log("Decorator 2 is called");
+		constructor.prototype.decorator2 = true;
+	}
+
+	@Decorator1
+	@Decorator2
+	//
+	class Class1 {}
+	let c = new Class1();
+	console.log(c);
+}
