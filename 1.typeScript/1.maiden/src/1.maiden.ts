@@ -753,3 +753,27 @@ product.name = "sdkjflk";
 	let c = new Class1();
 	console.log(c);
 }
+
+// Parametarized Decorator
+// it is basically a Closure wrapped around devorator that accepts the parameter
+// The Closure that encaptulates it is called "Decorator Factory"
+{
+	interface Decorator1Options {
+		selector: string;
+	}
+	function Decorator1(options: Decorator1Options) {
+		// Decorator Factory
+		return (constructor: Function) => {
+			console.log("Component Decorator Called");
+			constructor.prototype.options = options;
+			constructor.prototype.uniqueID = new Date();
+			constructor.prototype.addToDOM = () => {
+				console.log("Inserting in the DOM");
+			};
+		};
+	}
+	@Decorator1({ selector: "#nav-bar" })
+	class Class1 {}
+	let c = new Class1();
+	console.log(c);
+}
