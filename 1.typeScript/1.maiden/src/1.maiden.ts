@@ -608,6 +608,13 @@ interface Productss {
 	name: string;
 	price: number;
 }
+class ProductStore extends Store<Product> {
+	objects = this.getData;
+	filterByPrice(): Product[] {
+		objects = objects;
+		return objects;
+	}
+}
 class Stores<T> {
 	protected _objects: T[] = [];
 	add(obj: T): void {
@@ -644,7 +651,9 @@ let productP: ReadOnlyProducct = {
 	name: "A",
 	price: 5,
 };
-productP.name = "N";
+console.log(productP);
+
+// productP.name = "N";
 // can't assign as the property is readOnly
 
 // now we can use generic type of readonly if we have to do this for other than products
@@ -662,7 +671,9 @@ let product: ReadOnly<Producct> = {
 	name: "N",
 	price: 10,
 };
-product.name = "sdkjflk";
+console.log(product);
+
+// product.name = "sdkjflk";
 
 // these types are so usefull that typescript has builtin support for them -->	TypeScript Utility Types
 
@@ -890,4 +901,77 @@ product.name = "sdkjflk";
 	}
 	const user = new User("12345");
 	user.password;
+}
+
+// Parameter Decorator
+{
+	interface WatchedParameter {
+		methodName: string;
+		parameterIndex: number;
+	}
+	const watchedParameters: WatchedParameter[] = [];
+	function Watch(target: any, methodName: string, parameterIndex: number) {
+		watchedParameters.push({ methodName, parameterIndex });
+		target = target;
+	}
+
+	class Vehicle {
+		move(@Watch speed: number) {
+			speed = speed;
+		}
+	}
+	const v1 = new Vehicle();
+	v1.move(80);
+	console.log(watchedParameters);
+}
+
+{
+	interface Product {
+		title: string;
+		price: number;
+	}
+
+	class Store<T> {
+		protected _objects: T[] = [];
+		add(obj: T): void {
+			this.setData = obj;
+		}
+		set setData(obj: T) {
+			this._objects.push(obj);
+		}
+		get getData(): T[] {
+			return this._objects;
+		}
+	}
+
+	class CompressStore<T> extends Store<T> {
+		compressData(): void {
+			const objects = this.getData;
+			objects.forEach((obj) => (this.setData = obj));
+		}
+	}
+
+	class Searchable<T extends { title?: string }> extends Store<T> {
+		searchObj(title: string): T | undefined {
+			return this.getData.find((obj) => obj.title === title);
+		}
+	}
+
+	class ProductStore extends Store<Product> {
+		objects = this.getData;
+		filterByPrice(): Product[] {
+			this.objects = this.objects;
+			return this.objects;
+		}
+	}
+
+	const obj1 = new CompressStore<Product>();
+	obj1.compressData();
+	console.log(obj1.getData);
+
+	const obj2 = new Searchable<Product>();
+	console.log(obj2.searchObj("ABC"));
+
+	const obj3 = new ProductStore();
+	console.log(obj3.filterByPrice());
 }

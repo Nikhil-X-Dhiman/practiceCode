@@ -18,6 +18,7 @@
 		"noImplicitReturns": true,
 		"allowUnreachableCode": false,
 		"experimentalDecorators": true,
+		"moduleResolution": "node",
 		"types": [],
 		// For nodejs:
 		// "lib": ["esnext"],
