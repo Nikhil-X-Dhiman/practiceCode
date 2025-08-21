@@ -1,10 +1,16 @@
 import { log } from "console";
-import { AuthorsData, GamesData, ReviewsData } from "./schema.js";
+import { AuthorsData, GamesData, ReviewsData, type Game } from "./schema.js";
 
 interface GameArgs {
 	name: string;
 	price: number;
 	platform: string[];
+}
+
+interface UpdateGameArgs {
+	name?: string;
+	price?: number;
+	platform?: string[];
 }
 
 const getRandomID = () => {
@@ -82,5 +88,22 @@ export const resolvers = {
 		removeAuthor: (_: unknown, args: { id: number }) =>
 			// not correct but remove game is correct
 			AuthorsData.filter((author) => author.id !== args.id),
+		updateGame: (_: unknown, args: { id: string; updates: UpdateGameArgs }) => {
+			const indexToUpdate = GamesData.findIndex(
+				(game) => game.id === parseInt(args.id)
+			);
+			if (indexToUpdate === -1) {
+				return null;
+			}
+			const existingGame: Game = GamesData[indexToUpdate]!;
+			const newGame: Game = { ...existingGame, ...args.updates };
+			// const newGame: Game = {
+			// 	...existingGame,
+			// 	...args.updates,
+			// 	id: parseInt(args.id),
+			// };
+			GamesData.splice(indexToUpdate, 1, newGame);
+			return GamesData[indexToUpdate];
+		},
 	},
 };
